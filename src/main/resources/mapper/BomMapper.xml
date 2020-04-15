@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianqian.erp.mapper.BomMapper">
+
+    <resultMap id="BaseResultMap" type="com.qianqian.erp.web.entity.Bom" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="col1" property="col1" jdbcType="VARCHAR" />
+        <result column="col2" property="col2" jdbcType="VARCHAR" />
+        <result column="col3" property="col3" jdbcType="VARCHAR" />
+        <result column="product_code" property="product_code" jdbcType="VARCHAR" />
+        <result column="product_name" property="product_name" jdbcType="VARCHAR" />
+        <result column="machine_type" property="machine_type" jdbcType="VARCHAR" />
+        <result column="texture" property="texture" jdbcType="VARCHAR" />
+        <result column="specification" property="specification" jdbcType="VARCHAR" />
+        <result column="goushu" property="goushu" jdbcType="VARCHAR" />
+        <result column="need_count" property="need_count" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="technology" property="technology" jdbcType="VARCHAR" />
+        <result column="supplier" property="supplier" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, col1, col2, col3, product_code, product_name, machine_type
+        , texture, specification, goushu, need_count, remark, technology
+        , supplier, create_time
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from bom;
+    </select>
+
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+        insert into bom (col1, col2, col3, product_code, product_name, machine_type, texture
+                        , specification, goushu, need_count, remark, technology, supplier, create_time)
+        values
+        <foreach collection="list" index="idx" item="item" separator=",">
+            (#{item.col1}, #{item.col2}, #{item.col3}, #{item.product_code}, #{item.product_name}, #{item.machine_type}, #{item.texture}
+            , #{item.specification}, #{item.goushu}, #{item.need_count}, #{item.remark}, #{item.technology}, #{item.supplier}, #{item.createTime})
+        </foreach>
+    </insert>
+
+</mapper>
